@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+﻿import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import RootNavigator from './src/navigation/RootNavigator';
+import { AppDataProvider } from './src/context/AppDataContext';
+import { LockProvider } from './src/context/LockContext';
+import ReminderSync from './src/components/ReminderSync';
+import LockGate from './src/components/LockGate';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <LockProvider>
+        <AppDataProvider>
+          <ReminderSync />
+          <LockGate>
+            <RootNavigator />
+          </LockGate>
+          <StatusBar style="dark" />
+        </AppDataProvider>
+      </LockProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
