@@ -6,6 +6,7 @@ import { useLock } from '../context/LockContext';
 import { ensurePermission } from '../utils/notifications';
 import SetPinModal from '../components/SetPinModal';
 import ShareMyCycleModal from '../components/ShareMyCycleModal';
+import PartnerViewModal from '../components/PartnerViewModal';
 import { runConnectionTest } from '../services/cloud';
 import { runSharingSelfTest, stopSharing } from '../services/sharing';
 import { useAura } from '../context/AuraContext';
@@ -41,6 +42,7 @@ export default function SettingsScreen() {
   const aura = useAura();
   const [pinModal, setPinModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
+  const [partnerModal, setPartnerModal] = useState(false);
   const [bioAvailable, setBioAvailable] = useState(false);
 
   useEffect(() => {
@@ -151,6 +153,14 @@ export default function SettingsScreen() {
           </View>
           <Text style={styles.link}>Open</Text>
         </TouchableOpacity>
+        <View style={styles.divider} />
+        <TouchableOpacity style={styles.row} onPress={() => setPartnerModal(true)}>
+          <View style={{ flex: 1, paddingRight: 12 }}>
+            <Text style={styles.label}>View a partner's cycle</Text>
+            <Text style={styles.hint}>Enter a code your partner sent you to see their shared updates.</Text>
+          </View>
+          <Text style={styles.link}>Open</Text>
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.section}>Privacy and security</Text>
@@ -219,6 +229,7 @@ export default function SettingsScreen() {
       </TouchableOpacity>
 
       <ShareMyCycleModal visible={shareModal} onClose={() => setShareModal(false)} />
+      <PartnerViewModal visible={partnerModal} onClose={() => setPartnerModal(false)} />
       <SetPinModal visible={pinModal} onClose={() => setPinModal(false)} />
     </ScrollView>
   );
@@ -246,6 +257,7 @@ const styles = StyleSheet.create({
   },
   outlineText: { color: colors.primary, fontWeight: '700' },
 });
+
 
 
 
