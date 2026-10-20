@@ -5,6 +5,9 @@ import { useAppData } from '../context/AppDataContext';
 import { useLock } from '../context/LockContext';
 import { ensurePermission } from '../utils/notifications';
 import SetPinModal from '../components/SetPinModal';
+import { runConnectionTest } from '../services/cloud';
+import { runSharingSelfTest } from '../services/sharing';
+import { useAura } from '../context/AuraContext';
 
 function Stepper({
   label, hint, value, min, max, onChange,
@@ -34,6 +37,7 @@ function Stepper({
 export default function SettingsScreen() {
   const { periods, logs, settings, updateSettings, resetAll } = useAppData();
   const lock = useLock();
+  const aura = useAura();
   const [pinModal, setPinModal] = useState(false);
   const [bioAvailable, setBioAvailable] = useState(false);
 
@@ -94,7 +98,7 @@ export default function SettingsScreen() {
       'This removes all periods, logs and settings from this device. It cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: resetAll },
+        { text: 'Delete', style: 'destructive', onPress: () => { resetAll(); aura.clearAll(); } },
       ]
     );
 
@@ -188,6 +192,19 @@ export default function SettingsScreen() {
         </TouchableOpacity>
       </View>
 
+      <TouchableOpacity
+        style={[styles.outlineBtn, { marginTop: 20 }]}
+        onPress={async () => {
+          try {
+            Alert.alert('Cloud test', (await runConnectionTest()) + '\n\n' + (await runSharingSelfTest()));
+          } catch (e: any) {
+            Alert.alert('Cloud test failed', String(e?.message ?? e));
+          }
+        }}
+      >
+        <Text style={styles.outlineText}>Test cloud connection (temporary)</Text>
+      </TouchableOpacity>
+
       <SetPinModal visible={pinModal} onClose={() => setPinModal(false)} />
     </ScrollView>
   );
@@ -215,3 +232,6 @@ const styles = StyleSheet.create({
   },
   outlineText: { color: colors.primary, fontWeight: '700' },
 });
+
+
+
