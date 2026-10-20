@@ -494,6 +494,43 @@ const INTENTS: Intent[] = [
       ),
   },
   {
+    id: 'libido',
+    keys: ['sex drive', 'libido', 'low desire', 'desire', 'in the mood', 'horny', 'sexual desire'],
+    reply: (c) =>
+      r(
+        `Sex drive naturally shifts through the cycle. Many people feel more desire around ovulation, when hormone levels peak, and less in the days before a period. It varies a lot though, and some people feel the opposite. Stress, sleep, mood, health, relationships and some medicines (including certain hormonal contraceptives) all play a part.${c && c.phase === 'luteal' ? `\n\nYou're in the luteal phase, where desire often dips a little. That's normal.` : ''}\n\nThere is no "right" amount of desire, and you never owe anyone sex. If low desire worries you, or sex is painful or uncomfortable, a doctor can help, because both are common and often treatable.`,
+        ['Painful sex or dryness', 'Can I get pregnant on my period?']
+      ),
+  },
+  {
+    id: 'sex_comfort',
+    keys: ['painful sex', 'pain during sex', 'pain when having sex', 'hurts during sex', 'vaginal dryness', 'dryness', 'lubricant', 'lube', 'dyspareunia', 'sex hurts', 'uncomfortable sex'],
+    reply: () =>
+      r(
+        `Discomfort or dryness during sex is common, and often fixable.\n\n${bullets([
+          `Dryness can come from hormone changes (around your period, after childbirth, while breastfeeding, with some contraceptives, or in perimenopause). A water-based lubricant often helps`,
+          `Take your time: more arousal and foreplay increase natural lubrication`,
+          `Talk with your partner about pace and positions, and stop if anything hurts`,
+          `Stress and tension can tighten muscles, so relaxing and going slowly helps`,
+        ])}\n\nSee a doctor if pain keeps happening, if you bleed after sex, or if you notice unusual discharge, itching, burning or fever, since these can be signs of an infection or another condition that needs treatment.`,
+        ['What is my sex drive like?']
+      ),
+  },
+  {
+    id: 'emergency_contraception',
+    keys: ['emergency contraception', 'morning after', 'plan b', 'ipill', 'i pill', 'unprotected sex', 'condom broke', 'condom split', 'contraception failed'],
+    reply: () =>
+      r(
+        `If you had unprotected sex or a method failed (like a condom breaking), emergency contraception can greatly reduce the chance of pregnancy, and the sooner it is taken the better.\n\n${bullets([
+          `Some emergency pills work for up to 3 days and others up to 5 days`,
+          `A copper IUD fitted by a doctor also works for up to 5 days`,
+          `A pharmacist or doctor can tell you which option suits you. In many places the pill is available without a prescription`,
+          `It does not protect against infections, so consider testing if you are worried`,
+        ])}\n\nIf your next period is more than a week late, take a pregnancy test.`,
+        ['Why is my period late?']
+      ),
+  },
+  {
     id: 'sex',
     keys: ['sex', 'intercourse', 'intimacy'],
     reply: () => r(`Sex during a period is generally fine if you're comfortable, and some people find it eases cramps. Pregnancy and sexually transmitted infections are still possible, so use protection if you need it. Persistent pain during sex is worth mentioning to a doctor.`),
@@ -605,4 +642,5 @@ export function respond(input: AuraInput): AuraReply {
   if (best.needsData && !input.ctx) return noData(input);
   return best.reply(input.ctx);
 }
+
 

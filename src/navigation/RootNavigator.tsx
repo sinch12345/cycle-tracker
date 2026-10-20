@@ -56,7 +56,7 @@ export default function RootNavigator() {
           ),
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Calendar" component={CalendarScreen} />
         <Tab.Screen name="Log" component={LogScreen} />
         <Tab.Screen
@@ -70,3 +70,4 @@ export default function RootNavigator() {
     </NavigationContainer>
   );
 }
+

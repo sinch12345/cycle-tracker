@@ -18,6 +18,7 @@ export type Settings = {
   cycleLength: number;   // default average cycle length
   periodLength: number;  // default average period length
   remindersEnabled: boolean;
+  showIntimacy?: boolean; // show the Love & intimacy section on Home (default true)
 };
 
 export type AppData = {
@@ -30,6 +31,7 @@ export const DEFAULT_SETTINGS: Settings = {
   cycleLength: 28,
   periodLength: 5,
   remindersEnabled: false,
+  showIntimacy: true,
 };
 
 export const EMPTY_DATA: AppData = {
