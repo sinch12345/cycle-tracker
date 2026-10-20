@@ -15,6 +15,7 @@ import CycleTimeline from '../components/home/CycleTimeline';
 import WeekStrip from '../components/home/WeekStrip';
 import Meter from '../components/home/Meter';
 import IntimacySection from '../components/home/IntimacySection';
+import DidYouKnow from '../components/cards/DidYouKnow';
 
 const greeting = () => {
   const h = new Date().getHours();
@@ -146,6 +147,10 @@ export default function HomeScreen() {
           )}
         </FadeIn>
 
+        <FadeIn delay={160} style={{ marginTop: 18 }}>
+          <DidYouKnow phase={phase} showLove={showIntimacy} today={today} />
+        </FadeIn>
+
         <FadeIn delay={200} style={styles.card}>
           <Text style={styles.cardTitle}>Your cycle at a glance</Text>
           <Text style={styles.cardSub}>Where you are in your {p.cycleLength}-day cycle</Text>
@@ -271,3 +276,4 @@ const styles = StyleSheet.create({
   showLinkText: { color: colors.primary, fontWeight: '700' },
   disclaimer: { color: colors.muted, fontSize: 11, textAlign: 'center', marginTop: 22, lineHeight: 16, marginHorizontal: 24 },
 });
+
