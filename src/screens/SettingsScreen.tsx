@@ -5,8 +5,9 @@ import { useAppData } from '../context/AppDataContext';
 import { useLock } from '../context/LockContext';
 import { ensurePermission } from '../utils/notifications';
 import SetPinModal from '../components/SetPinModal';
+import ShareMyCycleModal from '../components/ShareMyCycleModal';
 import { runConnectionTest } from '../services/cloud';
-import { runSharingSelfTest } from '../services/sharing';
+import { runSharingSelfTest, stopSharing } from '../services/sharing';
 import { useAura } from '../context/AuraContext';
 
 function Stepper({
@@ -39,6 +40,7 @@ export default function SettingsScreen() {
   const lock = useLock();
   const aura = useAura();
   const [pinModal, setPinModal] = useState(false);
+  const [shareModal, setShareModal] = useState(false);
   const [bioAvailable, setBioAvailable] = useState(false);
 
   useEffect(() => {
@@ -98,7 +100,7 @@ export default function SettingsScreen() {
       'This removes all periods, logs and settings from this device. It cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => { resetAll(); aura.clearAll(); } },
+        { text: 'Delete', style: 'destructive', onPress: () => { stopSharing().catch(() => {}); resetAll(); aura.clearAll(); } },
       ]
     );
 
@@ -138,6 +140,17 @@ export default function SettingsScreen() {
             trackColor={{ true: colors.primary, false: colors.border }}
           />
         </View>
+      </View>
+
+      <Text style={styles.section}>Partner sharing</Text>
+      <View style={styles.card}>
+        <TouchableOpacity style={styles.row} onPress={() => setShareModal(true)}>
+          <View style={{ flex: 1, paddingRight: 12 }}>
+            <Text style={styles.label}>Share my cycle</Text>
+            <Text style={styles.hint}>Let a partner see your cycle updates. End-to-end encrypted, and you can stop anytime.</Text>
+          </View>
+          <Text style={styles.link}>Open</Text>
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.section}>Privacy and security</Text>
@@ -205,6 +218,7 @@ export default function SettingsScreen() {
         <Text style={styles.outlineText}>Test cloud connection (temporary)</Text>
       </TouchableOpacity>
 
+      <ShareMyCycleModal visible={shareModal} onClose={() => setShareModal(false)} />
       <SetPinModal visible={pinModal} onClose={() => setPinModal(false)} />
     </ScrollView>
   );
@@ -232,6 +246,8 @@ const styles = StyleSheet.create({
   },
   outlineText: { color: colors.primary, fontWeight: '700' },
 });
+
+
 
 
 
