@@ -204,11 +204,25 @@ const INTENTS: Intent[] = [
       ),
   },
   {
+    id: 'partner_share',
+    keys: ['partner', 'boyfriend', 'girlfriend', 'husband', 'wife', 'share my cycle', 'share my data', 'share with'],
+    reply: () =>
+      r(
+        `You can share your cycle with a partner from Settings, then Partner sharing, then Share my cycle.\n\n${bullets([
+          `You choose Basic (cycle day, phase and predicted dates) or Detailed (adds today's flow, symptoms and mood)`,
+          `Your notes are never shared`,
+          `The data is encrypted on your phone, and your partner needs your one-time code to read it`,
+          `You can stop sharing at any time, and their access ends immediately`,
+        ])}\n\nOnly share with someone you trust. If you ever feel pressured to share, you are always free to say no.`,
+        ['Is my data private?']
+      ),
+  },
+  {
     id: 'privacy',
     keys: ['privacy', 'private', 'is my data safe', 'data safe', 'who can see', 'secret', 'stored', 'delete my chat', 'my data'],
     reply: () =>
       r(
-        `Everything stays on your phone. There are no accounts, and this chat and your cycle data are never sent to a server.\n\n${bullets([
+        `Your cycle data and this chat are stored only on your phone, and there are no accounts. The one exception is partner sharing, which is off unless you start it: then an encrypted summary is stored on a server that cannot read it, until you stop sharing.\n\n${bullets([
           `The app can be locked with a PIN in Settings`,
           `Use the trash icon above to clear this conversation`,
           `Incognito starts a chat that is never saved`,
@@ -591,3 +605,4 @@ export function respond(input: AuraInput): AuraReply {
   if (best.needsData && !input.ctx) return noData(input);
   return best.reply(input.ctx);
 }
+

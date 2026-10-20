@@ -10,7 +10,9 @@ A private, offline-first period tracking app built with React Native and Expo.
 - Optional PIN and biometric lock
 - Period reminders
 - Data export and one-tap delete
-- All data stays on the device. Nothing is sent to a server.
+- Cycle data stays on the device
+- Optional end-to-end encrypted partner sharing (off by default, stoppable any time)
+- On-device assistant (Aura): no AI service, no internet needed
 
 ## Getting started
 ```bash
@@ -21,3 +23,4 @@ Open the app with Expo Go on your phone.
 
 ## Disclaimer
 Predictions are estimates based on logged history. This app is not a medical device and must not be used for contraception or diagnosis.
+

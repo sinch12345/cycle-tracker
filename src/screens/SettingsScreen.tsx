@@ -7,8 +7,8 @@ import { ensurePermission } from '../utils/notifications';
 import SetPinModal from '../components/SetPinModal';
 import ShareMyCycleModal from '../components/ShareMyCycleModal';
 import PartnerViewModal from '../components/PartnerViewModal';
-import { runConnectionTest } from '../services/cloud';
-import { runSharingSelfTest, stopSharing } from '../services/sharing';
+
+import { stopSharing } from '../services/sharing';
 import { useAura } from '../context/AuraContext';
 
 function Stepper({
@@ -205,7 +205,7 @@ export default function SettingsScreen() {
 
       <View style={[styles.card, { marginTop: 12 }]}>
         <Text style={styles.hint}>
-          All your data is stored only on this device. Nothing is sent to any server.
+          Your cycle data is stored only on this device. The only exception is partner sharing, which is off until you turn it on. It sends an encrypted summary that only your partner can read, and you can stop it at any time.
         </Text>
         <TouchableOpacity style={styles.outlineBtn} onPress={exportData}>
           <Text style={styles.outlineText}>Export my data</Text>
@@ -214,19 +214,6 @@ export default function SettingsScreen() {
           <Text style={styles.outlineText}>Delete all my data</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity
-        style={[styles.outlineBtn, { marginTop: 20 }]}
-        onPress={async () => {
-          try {
-            Alert.alert('Cloud test', (await runConnectionTest()) + '\n\n' + (await runSharingSelfTest()));
-          } catch (e: any) {
-            Alert.alert('Cloud test failed', String(e?.message ?? e));
-          }
-        }}
-      >
-        <Text style={styles.outlineText}>Test cloud connection (temporary)</Text>
-      </TouchableOpacity>
 
       <ShareMyCycleModal visible={shareModal} onClose={() => setShareModal(false)} />
       <PartnerViewModal visible={partnerModal} onClose={() => setPartnerModal(false)} />
@@ -257,6 +244,7 @@ const styles = StyleSheet.create({
   },
   outlineText: { color: colors.primary, fontWeight: '700' },
 });
+
 
 
 
