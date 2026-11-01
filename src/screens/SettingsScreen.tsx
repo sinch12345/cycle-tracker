@@ -10,6 +10,7 @@ import PartnerViewModal from '../components/PartnerViewModal';
 
 import { stopSharing } from '../services/sharing';
 import { clearCardState } from '../utils/cardDeck';
+import { clearBadgeState } from '../utils/badgeStore';
 import { useAura } from '../context/AuraContext';
 
 function Stepper({
@@ -103,7 +104,7 @@ export default function SettingsScreen() {
       'This removes all periods, logs and settings from this device. It cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => { stopSharing().catch(() => {}); resetAll(); aura.clearAll(); clearCardState(); } },
+        { text: 'Delete', style: 'destructive', onPress: () => { stopSharing().catch(() => {}); resetAll(); aura.clearAll(); clearCardState(); clearBadgeState(); } },
       ]
     );
 
@@ -245,6 +246,7 @@ const styles = StyleSheet.create({
   },
   outlineText: { color: colors.primary, fontWeight: '700' },
 });
+
 
 
 

@@ -15,6 +15,7 @@ import CycleTimeline from '../components/home/CycleTimeline';
 import WeekStrip from '../components/home/WeekStrip';
 import Meter from '../components/home/Meter';
 import IntimacySection from '../components/home/IntimacySection';
+import MoodStreakCard from '../components/home/MoodStreakCard';
 import DidYouKnow from '../components/cards/DidYouKnow';
 
 const greeting = () => {
@@ -147,6 +148,10 @@ export default function HomeScreen() {
           )}
         </FadeIn>
 
+        <FadeIn delay={140} style={styles.card}>
+          <MoodStreakCard phase={phase} today={today} />
+        </FadeIn>
+
         <FadeIn delay={160} style={{ marginTop: 18 }}>
           <DidYouKnow phase={phase} showLove={showIntimacy} today={today} />
         </FadeIn>
@@ -276,4 +281,5 @@ const styles = StyleSheet.create({
   showLinkText: { color: colors.primary, fontWeight: '700' },
   disclaimer: { color: colors.muted, fontSize: 11, textAlign: 'center', marginTop: 22, lineHeight: 16, marginHorizontal: 24 },
 });
+
 

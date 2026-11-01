@@ -46,9 +46,8 @@ export default function LogScreen() {
     setSymptoms(existing?.symptoms ?? []);
     setMood(existing?.mood);
     setNotes(existing?.notes ?? '');
-    setSaved(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, loading]);
+  }, [date, loading, logs[date]]);
 
   const toggleSymptom = (s: string) =>
     setSymptoms((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
@@ -166,4 +165,5 @@ const styles = StyleSheet.create({
   },
   saveText: { color: '#FFFFFF', fontWeight: '700', fontSize: 16 },
 });
+
 
