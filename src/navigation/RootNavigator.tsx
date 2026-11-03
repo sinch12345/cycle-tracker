@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme/colors';
 
-import HomeScreen from '../screens/HomeScreen';
+import HomeStack from './HomeStack';
 import CalendarScreen from '../screens/CalendarScreen';
 import LogScreen from '../screens/LogScreen';
 import AuraScreen from '../screens/AuraScreen';
@@ -56,7 +56,7 @@ export default function RootNavigator() {
           ),
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
         <Tab.Screen name="Calendar" component={CalendarScreen} />
         <Tab.Screen name="Log" component={LogScreen} />
         <Tab.Screen
@@ -70,4 +70,5 @@ export default function RootNavigator() {
     </NavigationContainer>
   );
 }
+
 
